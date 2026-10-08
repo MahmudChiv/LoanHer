@@ -26,3 +26,13 @@ def handle_send(phone: str) -> list[str]:
         "Your Loan Passport has been sent to Wema Bank!\n\n"
         "A loan officer will review your application. Reference: WB-PENDING"
     ]
+
+
+def refresh_application_for_passport(passport_id: str) -> None:
+    """
+    Copy the passport's current band and score onto any application that references it.
+
+    TODO: Implement in ClickUp task #APPLICATIONS-03
+    """
+    logger.info("Refreshing applications referencing passport ID: %s", passport_id)
+
