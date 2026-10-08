@@ -55,9 +55,21 @@ export async function getApplications(): Promise<Application[]> {
   return apiFetch<Application[]>("/api/applications");
 }
 
+export interface ApplicationDetailResponse {
+  application: Application;
+  passport?: Passport;
+}
+
 /** Fetch a single application by its human-readable ref (e.g. "APP-0001"). */
-export async function getApplication(ref: string): Promise<Application> {
-  return apiFetch<Application>(`/api/applications/${encodeURIComponent(ref)}`);
+export async function getApplication(ref: string): Promise<ApplicationDetailResponse> {
+  const data = await apiFetch<any>(`/api/applications/${encodeURIComponent(ref)}`);
+  if (data && data.application) {
+    return data as ApplicationDetailResponse;
+  }
+  return {
+    application: data as Application,
+    passport: (data.passport || undefined) as Passport | undefined,
+  };
 }
 
 /** Update the status of an application (officer action). */
