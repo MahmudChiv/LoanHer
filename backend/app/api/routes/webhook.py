@@ -1,7 +1,8 @@
 """
 Twilio WhatsApp webhook route.
 
-POST /webhook — Receives inbound WhatsApp webhook callbacks from Twilio.
+Receives inbound WhatsApp webhook callbacks from Twilio.
+Supports /webhook, /api/webhook, and /api/whatsapp/webhook routes.
 """
 
 from __future__ import annotations
@@ -41,6 +42,16 @@ def _safe_process_incoming(phone: str, text: str, has_media: bool) -> None:
 @router.post(
     "/webhook",
     summary="Twilio WhatsApp inbound webhook",
+    response_class=Response,
+)
+@router.post(
+    "/api/webhook",
+    summary="Twilio WhatsApp inbound webhook (api alias)",
+    response_class=Response,
+)
+@router.post(
+    "/api/whatsapp/webhook",
+    summary="Twilio WhatsApp inbound webhook (api/whatsapp alias)",
     response_class=Response,
 )
 async def webhook(
