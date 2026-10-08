@@ -1,0 +1,79 @@
+{
+  "components": [
+    {
+      "name": "Cash-flow health",
+      "weight": 30,
+      "score": 24
+    },
+    {
+      "name": "Ajo reliability",
+      "weight": 30,
+      "score": 27
+    },
+    {
+      "name": "Business legitimacy",
+      "weight": 20,
+      "score": 15
+    },
+    {
+      "name": "Stability and trend",
+      "weight": 20,
+      "score": 12
+    }
+  ],
+  "keyNumbers": {
+    "avgMonthlyInflow": 385000,
+    "monthsOfHistory": 11,
+    "consistency": "Steady inflow in 10 of 11 months",
+    "lowestBalance": 18500,
+    "freeCashFlow": 140000,
+    "repaymentCapacity": 42000
+  },
+  "ajo": {
+    "weeklyAmount": 5000,
+    "frequency": "weekly",
+    "monthsActive": 22,
+    "onTimeRecord": "49 of 52 weeks",
+    "verificationStatus": "collector-confirmed"
+  },
+  "flags": [
+    "Inflow dipped about 38% below average in August 2026",
+    "Balance fell below ₦25,000 on 3 days"
+  ],
+  "indicativeRange": {
+    "min": 150000,
+    "max": 220000
+  },
+  "suggestedProduct": "ALAT for Business Quick Loan (working capital)",
+  "whyBullets": [
+    "Steady inflows in 10 of 11 months",
+    "The main risk: inflow dipped about 38% in August 2026",
+    "Business registration found and active, and the name matches the account"
+  ],
+  "readinessChecklist": [
+    {
+      "label": "Business registered (CAC)",
+      "ok": true
+    },
+    {
+      "label": "Statement covers 6+ months",
+      "ok": true
+    },
+    {
+      "label": "Ajo verified by collector",
+      "ok": true
+    },
+    {
+      "label": "Wema business account",
+      "ok": false,
+      "nextStep": "Open an ALAT for Business account online or at a branch"
+    }
+  ],
+  "tips": [
+    "Keep your business income flowing into this one account",
+    "Keep a cushion above ₦25,000 to avoid low-balance days",
+    "Keep paying your ajo on time",
+    "Open an ALAT for Business account to speed up your application"
+  ],
+  "verificationTag": "Document-based, not source-verified"
+}

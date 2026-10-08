@@ -1,0 +1,34 @@
+[
+  {
+    "number": "BN 1234567",
+    "ownerName": "Kemi Adebayo",
+    "businessName": "Kemi Fabrics & Tailoring",
+    "status": "Active",
+    "address": "12 Dugbe Road, Ibadan, Oyo State",
+    "registeredDate": "2021-03-15"
+  },
+  {
+    "number": "BN 2345678",
+    "ownerName": "Ngozi Okafor",
+    "businessName": "Ngozi Provisions",
+    "status": "Active",
+    "address": "5 Bodija Market Road, Ibadan, Oyo State",
+    "registeredDate": "2022-06-02"
+  },
+  {
+    "number": "RC 3456789",
+    "ownerName": "Halima Bello",
+    "businessName": "Halima Foods Ltd",
+    "status": "Active",
+    "address": "21 Ring Road, Ibadan, Oyo State",
+    "registeredDate": "2019-09-20"
+  },
+  {
+    "number": "BN 4567890",
+    "ownerName": "Bisi Ajayi",
+    "businessName": "Bisi Stores",
+    "status": "Inactive",
+    "address": "8 Challenge Road, Ibadan, Oyo State",
+    "registeredDate": "2018-01-10"
+  }
+]

@@ -1,20 +1,43 @@
 """
 Collector (ajo group leader) verification loop.
 
-When an applicant provides their collector's phone number, the bot sends the
-collector a WhatsApp message asking them to confirm the applicant's ajo
-participation.  This module manages that outbound flow.
-
-TODO: Implement in ClickUp task #COLLECTOR-01
-      - Expose: initiate_verification(applicant_phone: str, collector_phone: str,
-                                       ajo_amount: float, ajo_months: int) -> None
-        Sends a WhatsApp message to the collector via whatsapp.send_whatsapp.
-        Stores a pending verification entry in store.pending_verifications.
-
-      - handle_collector_reply(collector_phone: str, body: str) -> None
-        Called from the webhook when the sender is a known collector.
-        Parses "yes"/"no" (or similar), updates the verification status on the
-        relevant passport, and notifies the applicant.
+Manages outbound requests and inbound confirmations for ajo savings groups.
 """
 
-# TODO: #COLLECTOR-01
+from __future__ import annotations
+
+import logging
+from app import store
+
+logger = logging.getLogger(__name__)
+
+
+def start_collector_verification(applicant_phone: str) -> None:
+    """
+    Initiate verification loop by messaging the collector.
+
+    TODO: Implement in ClickUp task #COLLECTOR-01
+          - Reads collector_phone from applicant conversation
+          - Stores entry in store.pending_verifications
+          - Sends verification request via whatsapp.send_whatsapp
+    """
+    logger.info("Initiating collector verification for applicant %s", applicant_phone)
+
+
+def is_collector_with_pending(phone: str) -> bool:
+    """
+    Check if the phone number belongs to a collector with a pending verification request.
+
+    TODO: Implement in ClickUp task #COLLECTOR-01
+    """
+    return phone in store.pending_verifications
+
+
+def handle_collector_message(phone: str, text: str) -> list[str]:
+    """
+    Handle response from an ajo collector.
+
+    TODO: Implement in ClickUp task #COLLECTOR-01
+    """
+    logger.info("Collector reply received from %s: %r", phone, text)
+    return ["Thank you for confirming the ajo participation."]

@@ -1,0 +1,165 @@
+[
+  {
+    "id": "seed-ngozi",
+    "applicantName": "Ngozi Okafor",
+    "businessName": "Ngozi Provisions",
+    "cacNumber": "BN 2345678",
+    "score": 61,
+    "band": "C",
+    "components": [
+      {
+        "name": "Cash-flow health",
+        "weight": 30,
+        "score": 15
+      },
+      {
+        "name": "Ajo reliability",
+        "weight": 30,
+        "score": 22
+      },
+      {
+        "name": "Business legitimacy",
+        "weight": 20,
+        "score": 14
+      },
+      {
+        "name": "Stability and trend",
+        "weight": 20,
+        "score": 10
+      }
+    ],
+    "keyNumbers": {
+      "avgMonthlyInflow": 210000,
+      "monthsOfHistory": 8,
+      "consistency": "Steady inflow in 5 of 8 months",
+      "lowestBalance": 9000,
+      "freeCashFlow": 55000,
+      "repaymentCapacity": 16500
+    },
+    "ajo": {
+      "weeklyAmount": 2000,
+      "frequency": "weekly",
+      "monthsActive": 10,
+      "onTimeRecord": "41 of 52 weeks",
+      "verificationStatus": "collector-confirmed"
+    },
+    "flags": [
+      "Inflow dipped sharply in two separate months",
+      "Balance fell below ₦10,000 on 9 days"
+    ],
+    "indicativeRange": {
+      "min": 50000,
+      "max": 90000
+    },
+    "suggestedProduct": "ALAT for Business Quick Loan (working capital)",
+    "whyBullets": [
+      "Steady inflows in 5 of 8 months with acceptable average turnover",
+      "Collector-verified ajo contribution history over 10 months",
+      "Active business name registration verified with CAC"
+    ],
+    "readinessChecklist": [
+      {
+        "label": "Business registered (CAC)",
+        "ok": true
+      },
+      {
+        "label": "Statement covers 6+ months",
+        "ok": true
+      },
+      {
+        "label": "Ajo verified by collector",
+        "ok": true
+      },
+      {
+        "label": "Wema business account",
+        "ok": false,
+        "nextStep": "Open an ALAT for Business account online or at a branch"
+      }
+    ],
+    "tips": [
+      "Maintain a cash cushion above ₦15,000 to reduce low-balance days",
+      "Encourage regular customer transfers to smooth out monthly inflows",
+      "Open an ALAT for Business account to speed up loan processing"
+    ],
+    "verificationTag": "Document-based, not source-verified"
+  },
+  {
+    "id": "seed-halima",
+    "applicantName": "Halima Bello",
+    "businessName": "Halima Foods Ltd",
+    "cacNumber": "RC 3456789",
+    "score": 88,
+    "band": "A",
+    "components": [
+      {
+        "name": "Cash-flow health",
+        "weight": 30,
+        "score": 26
+      },
+      {
+        "name": "Ajo reliability",
+        "weight": 30,
+        "score": 28
+      },
+      {
+        "name": "Business legitimacy",
+        "weight": 20,
+        "score": 19
+      },
+      {
+        "name": "Stability and trend",
+        "weight": 20,
+        "score": 15
+      }
+    ],
+    "keyNumbers": {
+      "avgMonthlyInflow": 780000,
+      "monthsOfHistory": 12,
+      "consistency": "Steady inflow in 12 of 12 months",
+      "lowestBalance": 120000,
+      "freeCashFlow": 320000,
+      "repaymentCapacity": 96000
+    },
+    "ajo": {
+      "weeklyAmount": 10000,
+      "frequency": "weekly",
+      "monthsActive": 36,
+      "onTimeRecord": "52 of 52 weeks",
+      "verificationStatus": "collector-confirmed"
+    },
+    "flags": [],
+    "indicativeRange": {
+      "min": 400000,
+      "max": 700000
+    },
+    "suggestedProduct": "ALAT for Business Quick Loan (working capital)",
+    "whyBullets": [
+      "Strong and consistent monthly inflows across all 12 months",
+      "Exceptional 36-month ajo track record with 52/52 weeks on-time",
+      "Active limited liability corporate registration with CAC"
+    ],
+    "readinessChecklist": [
+      {
+        "label": "Business registered (CAC)",
+        "ok": true
+      },
+      {
+        "label": "Statement covers 6+ months",
+        "ok": true
+      },
+      {
+        "label": "Ajo verified by collector",
+        "ok": true
+      },
+      {
+        "label": "Wema business account",
+        "ok": true
+      }
+    ],
+    "tips": [
+      "Continue maintaining current operating reserve levels to qualify for maximum facility limits",
+      "Keep all revenue routed through your primary business account"
+    ],
+    "verificationTag": "Document-based, not source-verified"
+  }
+]

@@ -1,14 +1,28 @@
 """
-Application creation service.
+Application creation and forwarding service.
 
-Called when the applicant taps "Send to Wema Bank" on their Passport page.
-
-TODO: Implement in ClickUp task #APPLICATIONS-02
-      - Expose: create_application(passport_id: str) -> Application
-        - Look up the passport in store.passports (raise 404 if missing)
-        - Generate a sequential ref, e.g. "APP-0001", "APP-0002"
-        - Build an Application model with status="submitted" and current UTC time
-        - Save to store.applications and return the model
+Called when the applicant completes their flow or replies SEND to submit
+their application to Wema Bank.
 """
 
-# TODO: #APPLICATIONS-02
+from __future__ import annotations
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+def handle_send(phone: str) -> list[str]:
+    """
+    Handle the 'SEND' command from an applicant to forward their Passport to Wema Bank.
+
+    TODO: Implement in ClickUp task #APPLICATIONS-02
+          - Creates an application entry in store.applications
+          - Generates application reference (e.g. WB-1003)
+          - Returns confirmation message with reference
+    """
+    logger.info("Forwarding application for %s to Wema Bank", phone)
+    return [
+        "Your Loan Passport has been sent to Wema Bank!\n\n"
+        "A loan officer will review your application. Reference: WB-PENDING"
+    ]

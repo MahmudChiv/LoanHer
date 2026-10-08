@@ -1,0 +1,22 @@
+[
+  {
+    "ref": "WB-1001",
+    "passportId": "seed-ngozi",
+    "applicantName": "Ngozi Okafor",
+    "businessName": "Ngozi Provisions",
+    "band": "C",
+    "score": 61,
+    "status": "under review",
+    "submittedAt": "2026-10-06T10:15:00Z"
+  },
+  {
+    "ref": "WB-1002",
+    "passportId": "seed-halima",
+    "applicantName": "Halima Bello",
+    "businessName": "Halima Foods Ltd",
+    "band": "A",
+    "score": 88,
+    "status": "submitted",
+    "submittedAt": "2026-10-06T14:40:00Z"
+  }
+]

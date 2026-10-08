@@ -1,26 +1,28 @@
 """
 Passport computation and bank-statement handling.
 
-This module contains the core "intelligence" of the prototype — but for the
-hackathon it is all simulated with hardcoded heuristics and dummy numbers.
-
-TODO: Implement in ClickUp task #PASSPORT-02
-      - handle_statement(passport_id: str, media_url: str) -> None
-        Downloads the uploaded file (PDF or image) and runs a simulated analysis.
-        Updates store.passports[passport_id] with computed KeyNumbers.
-        For the prototype, parse nothing — just return plausible hardcoded numbers
-        from a fixture or deterministic formula.
-
-      - compute_passport(conversation_data: dict) -> Passport
-        Builds a full Passport from the collected conversation data.
-        Scoring formula (all hardcoded/simulated for the prototype):
-          - Statement score   (weight 0.40)
-          - Ajo score         (weight 0.30)
-          - CAC score         (weight 0.15)
-          - Consistency score (weight 0.15)
-        Returns a Passport model instance and saves it to store.passports.
-
-NOTE: Do NOT include any interest rate or loan pricing fields.
+This module contains simulated statement analysis and Passport computation.
 """
 
-# TODO: #PASSPORT-02
+from __future__ import annotations
+
+import logging
+from app import store
+from app.models.schemas import ConversationState
+
+logger = logging.getLogger(__name__)
+
+
+def handle_statement(phone: str) -> None:
+    """
+    Handle statement upload, simulate scoring, and transition to DONE.
+
+    TODO: Implement in ClickUp task #PASSPORT-02
+          - Downloads the uploaded statement
+          - Runs simulated analysis and creates Passport
+          - Sends outbound messages with Passport link
+          - Sets conversation state to DONE
+    """
+    logger.info("Handling bank statement for %s", phone)
+    if phone in store.conversations:
+        store.conversations[phone]["state"] = ConversationState.DONE
