@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Application } from "@/types";
-import { getApplications } from "@/lib/api";
+import { getApplications, resetDemo } from "@/lib/api";
 import { BandBadge } from "@/components/BandBadge";
 import { StatusBadge } from "@/components/StatusBadge";
 
@@ -24,6 +24,8 @@ export default function OfficerDashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [newRefs, setNewRefs] = useState<Set<string>>(new Set());
+  const [resetToast, setResetToast] = useState<string | null>(null);
+  const [resetting, setResetting] = useState(false);
 
   const previousRefsRef = useRef<Set<string>>(new Set());
 
@@ -79,8 +81,31 @@ export default function OfficerDashboard() {
     };
   }, [fetchQueue]);
 
+  const handleResetDemo = async () => {
+    if (!window.confirm("Reset the demo data?")) return;
+    setResetting(true);
+    try {
+      const res = await resetDemo();
+      setResetToast(`Demo reset (${res.applications} applications loaded)`);
+      await fetchQueue();
+      setTimeout(() => setResetToast(null), 4000);
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : "Failed to reset demo";
+      setResetToast(`Reset Error: ${errMsg}`);
+      setTimeout(() => setResetToast(null), 5000);
+    } finally {
+      setResetting(false);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+      {/* Toast message */}
+      {resetToast && (
+        <div className="fixed bottom-4 right-4 z-50 p-3.5 rounded-xl bg-gray-900 text-white text-xs font-semibold shadow-lg border border-gray-800">
+          {resetToast}
+        </div>
+      )}
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-gray-200 dark:border-gray-800">
         <div>
@@ -243,6 +268,17 @@ export default function OfficerDashboard() {
           </div>
         </>
       )}
+
+      {/* Page Footer Reset Button */}
+      <div className="pt-8 text-center border-t border-gray-200/60 dark:border-gray-800/60">
+        <button
+          disabled={resetting}
+          onClick={handleResetDemo}
+          className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 underline transition disabled:opacity-50"
+        >
+          {resetting ? "Resetting demo..." : "Reset demo"}
+        </button>
+      </div>
     </div>
   );
 }

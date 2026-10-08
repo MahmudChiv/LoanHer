@@ -88,10 +88,15 @@ export async function updateApplicationStatus(
 // Demo
 // ---------------------------------------------------------------------------
 
-/** Reset all in-memory state for a live demo. Requires the reset secret. */
-export async function resetDemo(secret: string): Promise<{ reset: boolean }> {
-  return apiFetch<{ reset: boolean }>("/api/demo/reset", {
+/** Reset all in-memory state for a live demo. Sends X-Demo-Secret header if configured. */
+export async function resetDemo(secret?: string): Promise<{ status: string; applications: number }> {
+  const headers: Record<string, string> = {};
+  const demoSecret = secret || process.env.NEXT_PUBLIC_DEMO_SECRET;
+  if (demoSecret) {
+    headers["X-Demo-Secret"] = demoSecret;
+  }
+  return apiFetch<{ status: string; applications: number }>("/api/demo/reset", {
     method: "POST",
-    body: JSON.stringify({ secret }),
+    headers,
   });
 }
