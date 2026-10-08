@@ -134,3 +134,18 @@ def applicant_ajo_not_confirmed() -> str:
         "Your ajo collector could not confirm your ajo, so it stays unverified. "
         "You can still share your Passport."
     )
+
+
+# Submission to Wema Messages
+NEED_PASSPORT_FIRST = "Please finish your Passport first, then reply SEND."
+
+
+def sent_to_wema(ref: str) -> str:
+    """Format confirmation message when application is sent to Wema Bank."""
+    return f"Sent to Wema ✓ Your reference is {ref}."
+
+
+def already_sent(ref: str) -> str:
+    """Format message when application was already sent."""
+    return f"Your Passport was already sent. Reference: {ref}."
+
