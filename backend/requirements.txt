@@ -1,0 +1,12 @@
+# LoenHer Backend — Runtime Dependencies
+# Generated after: pip install <packages> in .loanHerVenv
+# Pin top-level packages only; let pip resolve transitive deps.
+
+fastapi==0.142.4
+uvicorn[standard]==0.54.0
+python-multipart==0.0.32
+twilio==9.11.2
+pydantic==2.13.5
+pydantic-settings==2.15.0
+python-dotenv==1.2.4
+httpx==0.28.1

@@ -1,0 +1,54 @@
+# Byte-compiled / optimised / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Virtual environments — any common name
+.venv/
+venv/
+env/
+.env/
+.loanHerVenv/
+
+# Env / secrets — examples are safe to commit, actual .env files are NOT
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env.local
+
+# Ruff / linting caches
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Node / Next.js
+node_modules/
+frontend/.next/
+frontend/out/
+.next/
+
+# OS junk
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Logs
+*.log
