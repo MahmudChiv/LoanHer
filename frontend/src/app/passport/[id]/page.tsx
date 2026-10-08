@@ -12,6 +12,8 @@
  *   - Show a loading skeleton and a 404 message if passport is not found.
  */
 
+export const dynamic = "force-dynamic";
+
 interface PassportPageProps {
   params: Promise<{ id: string }>;
 }

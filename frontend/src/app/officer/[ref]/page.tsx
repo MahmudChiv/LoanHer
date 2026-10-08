@@ -10,6 +10,8 @@
  *   - Show a success toast on status update.
  */
 
+export const dynamic = "force-dynamic";
+
 interface ApplicationDetailPageProps {
   params: Promise<{ ref: string }>;
 }
