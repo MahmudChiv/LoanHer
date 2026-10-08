@@ -19,43 +19,43 @@ export function FairnessPanel() {
   ];
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">
+    <div className="glass-card rounded-3xl p-6 md:p-8 border border-white/10 shadow-2xl space-y-6">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-gray-100 dark:border-gray-800">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
         <div>
           <div className="flex items-center gap-3">
-            <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+            <h2 className="text-xl font-black tracking-tight text-white">
               Fairness view
             </h2>
-            <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
+            <span className="px-3 py-0.5 text-[11px] font-extrabold rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30">
               Illustrative
             </span>
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-xs text-zinc-400 mt-1">
             Illustrative data. Shows the view Wema would see with real volumes.
           </p>
         </div>
       </div>
 
       {/* Grid Content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Left Column: Gender Metrics */}
         <div className="space-y-6">
           {/* Approval rate by gender */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
               Approval rate by gender
             </h3>
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {genderApproval.map((item) => (
-                <div key={item.label} className="space-y-1">
+                <div key={item.label} className="space-y-1.5">
                   <div className="flex justify-between text-xs font-semibold">
-                    <span className="text-gray-700 dark:text-gray-300">{item.label}</span>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">{item.value}</span>
+                    <span className="text-zinc-200">{item.label}</span>
+                    <span className="text-orange-400 font-bold">{item.value}</span>
                   </div>
-                  <div className="h-2.5 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden p-0.5 border border-white/5">
                     <div
-                      className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+                      className="h-full bg-gradient-to-r from-orange-500 to-amber-500 rounded-full transition-all duration-500"
                       style={{ width: `${item.percentage}%` }}
                     />
                   </div>
@@ -66,19 +66,19 @@ export function FairnessPanel() {
 
           {/* Average indicative limit by gender */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
               Average indicative limit by gender
             </h3>
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               {genderLimits.map((item) => (
-                <div key={item.label} className="space-y-1">
+                <div key={item.label} className="space-y-1.5">
                   <div className="flex justify-between text-xs font-semibold">
-                    <span className="text-gray-700 dark:text-gray-300">{item.label}</span>
-                    <span className="text-indigo-600 dark:text-indigo-400 font-bold">{item.value}</span>
+                    <span className="text-zinc-200">{item.label}</span>
+                    <span className="text-amber-300 font-bold">{item.value}</span>
                   </div>
-                  <div className="h-2.5 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden p-0.5 border border-white/5">
                     <div
-                      className="h-full bg-indigo-500 rounded-full transition-all duration-500"
+                      className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full transition-all duration-500"
                       style={{ width: `${item.percentage}%` }}
                     />
                   </div>
@@ -90,19 +90,19 @@ export function FairnessPanel() {
 
         {/* Right Column: Sector Metrics */}
         <div className="space-y-3">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400">
             Approval rate by sector
           </h3>
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             {sectorApproval.map((item) => (
-              <div key={item.label} className="space-y-1">
+              <div key={item.label} className="space-y-1.5">
                 <div className="flex justify-between text-xs font-semibold">
-                  <span className="text-gray-700 dark:text-gray-300">{item.label}</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">{item.value}</span>
+                  <span className="text-zinc-200">{item.label}</span>
+                  <span className="text-emerald-400 font-bold">{item.value}</span>
                 </div>
-                <div className="h-2.5 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden p-0.5 border border-white/5">
                   <div
-                    className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500"
                     style={{ width: `${item.percentage}%` }}
                   />
                 </div>
@@ -113,8 +113,8 @@ export function FairnessPanel() {
       </div>
 
       {/* Plain Language Footer Note */}
-      <div className="pt-4 border-t border-gray-100 dark:border-gray-800">
-        <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">
+      <div className="pt-4 border-t border-white/10">
+        <p className="text-xs text-zinc-400 font-medium">
           We check that our score doesn&apos;t treat women-led businesses worse, and show the gap if it does.
         </p>
       </div>
