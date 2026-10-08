@@ -145,3 +145,10 @@ class Application(BaseModel):
     score: int = Field(..., ge=0, le=100)
     status: ApplicationStatus = ApplicationStatus.SUBMITTED
     submittedAt: str = Field(..., description="ISO 8601 datetime string")
+
+
+class UpdateStatusPayload(BaseModel):
+    """Payload for updating an application's status."""
+
+    status: ApplicationStatus
+
