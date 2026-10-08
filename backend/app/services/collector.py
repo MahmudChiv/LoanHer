@@ -7,6 +7,7 @@ Manages outbound requests and inbound confirmations for ajo savings groups.
 from __future__ import annotations
 
 import logging
+
 from app import store
 
 logger = logging.getLogger(__name__)

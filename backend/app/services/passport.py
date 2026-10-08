@@ -7,6 +7,7 @@ This module contains simulated statement analysis and Passport computation.
 from __future__ import annotations
 
 import logging
+
 from app import store
 from app.models.schemas import ConversationState
 

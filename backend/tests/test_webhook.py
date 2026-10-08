@@ -47,7 +47,8 @@ def test_webhook_with_media_returns_200():
 def test_seed_data_loaded_on_startup():
     """Verify that lifespan handler populated store with seed fixtures."""
     # Seed data files in data/ contain at least seed-ngozi, seed-halima / WB-1001, WB-1002
-    assert len(passports) > 0
-    assert "seed-ngozi" in passports
-    assert len(applications) > 0
-    assert "WB-1001" in applications
+    with TestClient(app):
+        assert len(passports) > 0
+        assert "seed-ngozi" in passports
+        assert len(applications) > 0
+        assert "WB-1001" in applications

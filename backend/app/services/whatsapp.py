@@ -11,12 +11,13 @@ from __future__ import annotations
 import logging
 import re
 
-from app.config import get_settings
-
 # pyrefly: ignore [missing-import]
 from twilio.base.exceptions import TwilioRestException
+
 # pyrefly: ignore [missing-import]
 from twilio.rest import Client
+
+from app.config import get_settings
 
 logger = logging.getLogger(__name__)
 
@@ -46,9 +47,7 @@ def normalize_recipient(phone: str) -> str:
     # Convert Nigerian local number starting with 0
     if cleaned.startswith("0"):
         cleaned = f"+234{cleaned[1:]}"
-    elif cleaned.startswith("234"):
-        cleaned = f"+{cleaned}"
-    elif not cleaned.startswith("+"):
+    elif cleaned.startswith("234") or not cleaned.startswith("+"):
         cleaned = f"+{cleaned}"
 
     return f"whatsapp:{cleaned}"
@@ -71,10 +70,7 @@ def _is_twilio_configured() -> bool:
     # Check for placeholder values from .env.example
     if sid in ("ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "your_twilio_account_sid") or sid.startswith("your_"):
         return False
-    if token in ("your_twilio_auth_token", "change_me") or token.startswith("your_"):
-        return False
-
-    return True
+    return not (token in ("your_twilio_auth_token", "change_me") or token.startswith("your_"))
 
 
 def send_whatsapp(to: str, body: str) -> str | None:

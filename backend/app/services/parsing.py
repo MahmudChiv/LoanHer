@@ -125,9 +125,7 @@ def normalize_phone(text: str) -> str | None:
 
     if digits_only.startswith("0"):
         digits_only = f"+234{digits_only[1:]}"
-    elif digits_only.startswith("234"):
-        digits_only = f"+{digits_only}"
-    elif not digits_only.startswith("+"):
+    elif digits_only.startswith("234") or not digits_only.startswith("+"):
         digits_only = f"+{digits_only}"
 
     if re.fullmatch(r"\+\d{7,15}", digits_only):
