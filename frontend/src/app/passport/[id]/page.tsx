@@ -86,7 +86,26 @@ export default function PassportPage({ params }: PassportPageProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6 print:p-0 print:max-w-none">
+      {/* Top Action Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm print:hidden">
+        <div>
+          <h2 className="text-sm font-bold text-gray-900 dark:text-white">
+            Wema Loan Passport
+          </h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
+            Verified financial readiness report prepared via LoenHer.
+          </p>
+        </div>
+        <button
+          onClick={() => window.print()}
+          className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-sm transition active:scale-95"
+        >
+          <span>🖨️</span>
+          <span>Download / Print</span>
+        </button>
+      </div>
+
       <PassportView passport={passport} animateScore={animateScore} />
     </div>
   );

@@ -6,6 +6,7 @@ import type { Application } from "@/types";
 import { getApplications, resetDemo } from "@/lib/api";
 import { BandBadge } from "@/components/BandBadge";
 import { StatusBadge } from "@/components/StatusBadge";
+import { FairnessPanel } from "@/components/FairnessPanel";
 
 function formatRelativeTime(dateString: string): string {
   if (!dateString) return "Just now";
@@ -268,6 +269,9 @@ export default function OfficerDashboard() {
           </div>
         </>
       )}
+
+      {/* Fairness Panel */}
+      <FairnessPanel />
 
       {/* Page Footer Reset Button */}
       <div className="pt-8 text-center border-t border-gray-200/60 dark:border-gray-800/60">
