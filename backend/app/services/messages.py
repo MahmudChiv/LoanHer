@@ -101,3 +101,36 @@ RESET_DONE = (
     "Your conversation has been reset.\n\n"
     "Reply with your Name and CAC number whenever you are ready to start again!"
 )
+
+# Collector Verification Messages
+def collector_question(applicant_name: str, amount: int | float, frequency: str, months: int) -> str:
+    """Format verification question sent to an ajo collector."""
+    return (
+        f"{applicant_name} says she pays ₦{int(amount):,} {frequency} into your ajo group "
+        f"and has done for {months} months.\n"
+        "Is that correct? Reply 1 for Yes, 2 for No."
+    )
+
+
+ASK_LATE_PAYMENTS = (
+    "Thank you. In the last 12 months, how many payments was she late or did she miss? "
+    "Reply with a number (0 if none)."
+)
+
+COLLECTOR_THANKS = "Thank you, recorded ✓"
+COLLECTOR_NOT_CONFIRMED_ACK = "Thank you, noted."
+COLLECTOR_INVALID_CONFIRM = "Please reply 1 for Yes or 2 for No."
+COLLECTOR_INVALID_LATE = "Please reply with a number, for example 0 or 3."
+
+
+def applicant_ajo_confirmed() -> str:
+    """Format notification to applicant when ajo is confirmed by collector."""
+    return "Your ajo collector confirmed your ajo ✓ Your Passport has been updated."
+
+
+def applicant_ajo_not_confirmed() -> str:
+    """Format notification to applicant when ajo is not confirmed by collector."""
+    return (
+        "Your ajo collector could not confirm your ajo, so it stays unverified. "
+        "You can still share your Passport."
+    )
