@@ -62,12 +62,12 @@ export interface ApplicationDetailResponse {
 
 /** Fetch a single application by its human-readable ref (e.g. "APP-0001"). */
 export async function getApplication(ref: string): Promise<ApplicationDetailResponse> {
-  const data = await apiFetch<any>(`/api/applications/${encodeURIComponent(ref)}`);
-  if (data && data.application) {
-    return data as ApplicationDetailResponse;
+  const data = await apiFetch<Record<string, unknown>>(`/api/applications/${encodeURIComponent(ref)}`);
+  if (data && "application" in data && typeof data.application === "object" && data.application !== null) {
+    return data as unknown as ApplicationDetailResponse;
   }
   return {
-    application: data as Application,
+    application: data as unknown as Application,
     passport: (data.passport || undefined) as Passport | undefined,
   };
 }
