@@ -1,19 +1,42 @@
-"""
-Applicant conversation state machine.
+"""Applicant conversation state machine.
 
 Drives the WhatsApp onboarding flow through the states defined in
 models.schemas.ConversationState.
-
-TODO: Implement in ClickUp task #CONVERSATION-01
-      - Expose: handle_message(from_number: str, body: str, media_url: str | None) -> str
-        Returns the reply text to send back via WhatsApp.
-      - On START: greet, ask for business name & owner name, transition to ASK_AJO_AMOUNT
-      - On ASK_AJO_AMOUNT: parse amount via parsing.parse_amount, transition onward
-      - On ASK_AJO_FREQUENCY: parse via parsing.parse_frequency
-      - On ASK_AJO_MONTHS: parse via parsing.parse_months
-      - On ASK_COLLECTOR_PHONE: store number, trigger collector loop, transition to WAIT_STATEMENT
-      - On WAIT_STATEMENT: expect a PDF/image media_url, hand off to passport.handle_statement
-      - On DONE: remind applicant their Passport is ready and send the link
 """
 
-# TODO: #CONVERSATION-01
+import logging
+import time
+
+from app.services.whatsapp import send_whatsapp
+
+logger = logging.getLogger(__name__)
+
+
+def send_replies(phone: str, replies: list[str]) -> None:
+    """Send each reply line sequentially via WhatsApp with 0.7s delay.
+
+    Kept in its own clearly commented function so another task can replace
+    handle_message without modifying sending and pacing logic.
+    """
+    for line in replies:
+        if line:
+            send_whatsapp(to=phone, body=line)
+            time.sleep(0.7)
+
+
+def handle_message(phone: str, text: str, has_media: bool) -> list[str]:
+    """Handle incoming message and return reply lines.
+
+    Placeholder implementation for end-to-end pipeline connectivity.
+    TODO: Replace with full onboarding state machine in ClickUp task #CONVERSATION-01.
+    """
+    return ["Echo: " + text]
+
+
+def process_incoming(phone: str, text: str, has_media: bool) -> None:
+    """Process an incoming WhatsApp message dispatched from the webhook.
+
+    Calls handle_message to get reply lines, then dispatches each line via send_replies.
+    """
+    replies = handle_message(phone=phone, text=text, has_media=has_media)
+    send_replies(phone=phone, replies=replies)

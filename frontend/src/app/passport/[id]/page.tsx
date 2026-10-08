@@ -12,11 +12,13 @@
  *   - Show a loading skeleton and a 404 message if passport is not found.
  */
 
+import { Suspense } from "react";
+
 interface PassportPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function PassportPage({ params }: PassportPageProps) {
+async function PassportContent({ params }: PassportPageProps) {
   const { id } = await params;
 
   return (
@@ -28,5 +30,13 @@ export default async function PassportPage({ params }: PassportPageProps) {
         Implementation coming soon.
       </p>
     </main>
+  );
+}
+
+export default function PassportPage(props: PassportPageProps) {
+  return (
+    <Suspense fallback={<div className="p-8">Loading passport...</div>}>
+      <PassportContent {...props} />
+    </Suspense>
   );
 }

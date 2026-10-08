@@ -10,6 +10,7 @@
 
 import type {
   Application,
+  ApplicationDetailResponse,
   ApplicationStatus,
   Passport,
   UpdateStatusPayload,
@@ -55,9 +56,24 @@ export async function getApplications(): Promise<Application[]> {
   return apiFetch<Application[]>("/api/applications");
 }
 
-/** Fetch a single application by its human-readable ref (e.g. "APP-0001"). */
-export async function getApplication(ref: string): Promise<Application> {
-  return apiFetch<Application>(`/api/applications/${encodeURIComponent(ref)}`);
+/** Fetch a single application by its human-readable ref (e.g. "APP-0001") with its associated passport. */
+export async function getApplication(
+  ref: string,
+): Promise<ApplicationDetailResponse> {
+  const data = await apiFetch<Record<string, unknown>>(
+    `/api/applications/${encodeURIComponent(ref)}`
+  );
+  if (data && data.application && data.passport) {
+    return data as unknown as ApplicationDetailResponse;
+  }
+  if (data && data.ref && data.passport) {
+    const { passport, ...application } = data;
+    return {
+      application: application as unknown as Application,
+      passport: passport as unknown as Passport,
+    };
+  }
+  return data as unknown as ApplicationDetailResponse;
 }
 
 /** Update the status of an application (officer action). */

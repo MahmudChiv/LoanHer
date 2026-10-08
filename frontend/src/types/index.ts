@@ -103,3 +103,9 @@ export interface Application {
 export interface UpdateStatusPayload {
   status: ApplicationStatus;
 }
+
+export interface ApplicationDetailResponse {
+  application: Application;
+  passport: Passport;
+}
+
