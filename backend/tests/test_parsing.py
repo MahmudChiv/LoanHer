@@ -4,8 +4,6 @@ Tests for input parsing utilities in app/services/parsing.py.
 
 from __future__ import annotations
 
-import pytest
-
 from app.services.parsing import (
     normalize_phone,
     parse_all_ajo_details,

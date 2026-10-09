@@ -246,9 +246,15 @@ def parse_all_ajo_details(text: str) -> tuple[int, str, int, str] | None:
     elif months is None and numeric_vals:
         months = numeric_vals[0]
 
-    if amount is not None and frequency is not None and months is not None and norm_phone is not None:
-        if amount > 0 and months > 0:
-            return (amount, frequency, months, norm_phone)
+    if (
+        amount is not None
+        and frequency is not None
+        and months is not None
+        and norm_phone is not None
+        and amount > 0
+        and months > 0
+    ):
+        return (amount, frequency, months, norm_phone)
 
     return None
 
