@@ -45,8 +45,6 @@ def parse_amount(text: str) -> int | None:
     """
     Extract a positive integer monetary contribution amount from text.
 
-    TODO: Implement in ClickUp task #PARSING-01
-
     Handles formats like: "50000", "₦50,000", "50k", "50,000.00".
     """
     clean = text.strip().lower()
@@ -61,11 +59,12 @@ def parse_amount(text: str) -> int | None:
         except ValueError:
             return None
 
-    # Extract digits, removing commas, periods, currency symbols
-    digits = re.sub(r"[^\d]", "", clean)
-    if digits:
+    # Match numeric amount with optional currency symbol, commas, or decimals
+    match = re.search(r"[₦N]?\s*(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)", clean)
+    if match:
+        num_str = match.group(1).replace(",", "")
         try:
-            val = int(digits)
+            val = int(float(num_str))
             return val if val > 0 else None
         except ValueError:
             return None
@@ -76,8 +75,6 @@ def parse_amount(text: str) -> int | None:
 def parse_frequency(text: str) -> str | None:
     """
     Map input variants to canonical frequency: 'daily' | 'weekly' | 'monthly'.
-
-    TODO: Implement in ClickUp task #PARSING-01
     """
     clean = text.strip().lower()
     if "day" in clean or "daily" in clean:
@@ -92,10 +89,20 @@ def parse_frequency(text: str) -> str | None:
 def parse_months(text: str) -> int | None:
     """
     Extract a positive integer number of months from free text.
-
-    TODO: Implement in ClickUp task #PARSING-01
     """
     clean = text.strip().lower()
+    if not clean:
+        return None
+
+    # Check for explicit 'months' or 'm' notation (e.g., "22 months", "6m")
+    m_match = re.search(r"\b(\d+)\s*(?:months?|m)\b", clean)
+    if m_match:
+        try:
+            val = int(m_match.group(1))
+            return val if val > 0 else None
+        except ValueError:
+            pass
+
     match = re.search(r"\b(\d+)\b", clean)
     if match:
         try:
@@ -109,8 +116,6 @@ def parse_months(text: str) -> int | None:
 def normalize_phone(text: str) -> str | None:
     """
     Normalize phone number into 'whatsapp:+234XXXXXXXXXX' format.
-
-    TODO: Implement in ClickUp task #PARSING-01
     """
     clean = text.strip()
     if not clean:
@@ -141,6 +146,7 @@ def parse_all_ajo_details(text: str) -> tuple[int, str, int, str] | None:
     Example inputs:
       - "5000, weekly, 22, 08053112170"
       - "50k monthly 12 08031234567"
+      - "₦50,000, weekly, 22 months, 08053112170"
 
     Returns (amount, frequency, months, normalized_phone) or None if incomplete.
     """
@@ -148,21 +154,102 @@ def parse_all_ajo_details(text: str) -> tuple[int, str, int, str] | None:
     if not clean:
         return None
 
-    amount = parse_amount(clean)
-    frequency = parse_frequency(clean)
-    months = parse_months(clean)
+    # Step 1: Find Phone Number
+    phone_match = re.search(r"(?:whatsapp:)?(?:\+?234|0)[789]\d{9}\b", clean, re.IGNORECASE)
+    if not phone_match:
+        phone_match = re.search(r"(?:whatsapp:)?(?:\+?\d{10,14})\b", clean, re.IGNORECASE)
 
-    # Find phone token matching Nigerian phone pattern (080... or +234...)
-    phone = None
-    tokens = re.findall(r"(?:whatsapp:)?(?:\+?234|0)\d{9,10}\b", clean, re.IGNORECASE)
-    for token in tokens:
-        norm = normalize_phone(token)
-        if norm:
-            phone = norm
-            break
+    if not phone_match:
+        return None
 
-    if amount is not None and frequency is not None and months is not None and phone is not None:
-        return (amount, frequency, months, phone)
+    raw_phone = phone_match.group(0)
+    norm_phone = normalize_phone(raw_phone)
+    if not norm_phone:
+        return None
+
+    # Remove phone number from clean text to prevent phone digits from polluting numeric parsing
+    clean_no_phone = clean[:phone_match.start()] + " " + clean[phone_match.end():]
+
+    # Step 2: Find Frequency
+    frequency = parse_frequency(clean_no_phone)
+    if not frequency:
+        return None
+
+    # Remove frequency keyword
+    clean_no_freq = re.sub(
+        r"\b(daily|weekly|monthly|day|week|month)s?\b",
+        " ",
+        clean_no_phone,
+        flags=re.IGNORECASE,
+    )
+
+    # Step 3: Extract Amount and Months
+    amount = None
+    months = None
+
+    # Check for 'k' notation (e.g. 50k)
+    k_match = re.search(r"\b(\d+(?:\.\d+)?)\s*k\b", clean_no_freq, re.IGNORECASE)
+    if k_match:
+        try:
+            amount = int(float(k_match.group(1)) * 1000)
+            clean_no_freq = clean_no_freq[:k_match.start()] + " " + clean_no_freq[k_match.end():]
+        except ValueError:
+            pass
+
+    # Check for explicit months (e.g. 22 months, 6m)
+    m_match = re.search(r"\b(\d+)\s*(?:months?|m)\b", clean_no_freq, re.IGNORECASE)
+    if m_match:
+        try:
+            months = int(m_match.group(1))
+            clean_no_freq = clean_no_freq[:m_match.start()] + " " + clean_no_freq[m_match.end():]
+        except ValueError:
+            pass
+
+    # Check for currency symbol prefix (e.g. ₦50,000 or N50,000)
+    curr_match = re.search(r"[₦N]\s*(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)", clean_no_freq, re.IGNORECASE)
+    if amount is None and curr_match:
+        num_str = curr_match.group(1).replace(",", "")
+        try:
+            amount = int(float(num_str))
+            clean_no_freq = clean_no_freq[:curr_match.start()] + " " + clean_no_freq[curr_match.end():]
+        except ValueError:
+            pass
+
+    # Find remaining numeric tokens
+    tokens = re.findall(r"\b\d{1,3}(?:,\d{3})+(?:\.\d+)?\b|\b\d+(?:\.\d+)?\b", clean_no_freq)
+    numeric_vals = []
+    for tok in tokens:
+        clean_tok = tok.replace(",", "")
+        try:
+            val = int(float(clean_tok))
+            if val > 0:
+                numeric_vals.append(val)
+        except ValueError:
+            pass
+
+    if amount is None and months is None:
+        if len(numeric_vals) >= 2:
+            if numeric_vals[0] >= 100 and numeric_vals[1] <= 120:
+                amount, months = numeric_vals[0], numeric_vals[1]
+            elif numeric_vals[1] >= 100 and numeric_vals[0] <= 120:
+                months, amount = numeric_vals[0], numeric_vals[1]
+            else:
+                amount, months = numeric_vals[0], numeric_vals[1]
+        elif len(numeric_vals) == 1:
+            val = numeric_vals[0]
+            if val > 120:
+                amount = val
+            else:
+                months = val
+    elif amount is None and numeric_vals:
+        amount = numeric_vals[0]
+    elif months is None and numeric_vals:
+        months = numeric_vals[0]
+
+    if amount is not None and frequency is not None and months is not None and norm_phone is not None:
+        if amount > 0 and months > 0:
+            return (amount, frequency, months, norm_phone)
 
     return None
+
 
