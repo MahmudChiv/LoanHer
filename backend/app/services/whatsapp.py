@@ -1,5 +1,5 @@
 """
-WhatsApp message sender service for LoenHer.
+WhatsApp message sender service for LoanHer.
 
 Sends outbound WhatsApp messages via Twilio's WhatsApp sandbox or API.
 Supports dry-run mode when Twilio credentials are not configured, logging

@@ -1,6 +1,6 @@
 # Twilio WhatsApp Sandbox — Team Guide
 
-> **Project:** LoenHer (Hackaholics 7.0 prototype · Wema Bank)  
+> **Project:** LoanHer (Hackaholics 7.0 prototype · Wema Bank)  
 > **Purpose:** Quickstart guide for setting up, joining, testing, and troubleshooting the Twilio WhatsApp Sandbox.
 
 ---
@@ -24,7 +24,7 @@ The Twilio WhatsApp sandbox allows testing WhatsApp bots without waiting for Met
 
 Because this is a shared sandbox, **every team member and tester must opt in before receiving any message**. Twilio will reject messages sent to unjoined numbers.
 
-1. **Save Contact:** Save the Twilio Sandbox number (`+1 415 523 8886`) in your mobile phone contacts (e.g. as *"LoenHer Sandbox Bot"*).
+1. **Save Contact:** Save the Twilio Sandbox number (`+1 415 523 8886`) in your mobile phone contacts (e.g. as *"LoanHer Sandbox Bot"*).
 2. **Open WhatsApp:** Open WhatsApp on your phone or desktop.
 3. **Start Chat:** Start a new chat with `+1 415 523 8886`.
 4. **Send Join Message:** Send the exact join code (e.g., `join brave-otter`).
@@ -63,23 +63,23 @@ From the `backend/` directory:
 
 ```bash
 # Using standard international format:
-python scripts/send_test_message.py +2348031234567 "Hello from LoenHer"
+python scripts/send_test_message.py +2348031234567 "Hello from LoanHer"
 
 # Using Nigerian local format (automatically converted to +234):
-python scripts/send_test_message.py 08031234567 "Hello from LoenHer"
+python scripts/send_test_message.py 08031234567 "Hello from LoanHer"
 
 # Using Twilio WhatsApp URI format:
-python scripts/send_test_message.py whatsapp:+2348031234567 "Hello from LoenHer"
+python scripts/send_test_message.py whatsapp:+2348031234567 "Hello from LoanHer"
 ```
 
-*(Note: The script can also be run from the repository root: `python backend/scripts/send_test_message.py 08031234567 "Hello from LoenHer"`)*
+*(Note: The script can also be run from the repository root: `python backend/scripts/send_test_message.py 08031234567 "Hello from LoanHer"`)*
 
 ### Expected Success Output:
 ```text
 Sending WhatsApp sandbox message...
   To   : whatsapp:+2348031234567
   From : whatsapp:+14155238886
-  Body : 'Hello from LoenHer'
+  Body : 'Hello from LoanHer'
 
 Message sent successfully!
   Message SID : SM1234567890abcdef1234567890abcdef
@@ -92,7 +92,7 @@ Message sent successfully!
 
 Keep these Twilio sandbox limits in mind during development and hackathon presentations:
 
-| Sandbox Limit | Restriction | Impact on LoenHer Prototype & Testing |
+| Sandbox Limit | Restriction | Impact on LoanHer Prototype & Testing |
 | :--- | :--- | :--- |
 | **Join Required** | Outbound messaging is blocked until the recipient opts in by texting `join <code>`. | Unjoined recipients fail with error `63015`. All judges or team testers must join the sandbox first. |
 | **24-Hour Window** | Freeform outbound messages are only permitted within 24 hours of the user's last message to the bot. | If 24 hours pass without an inbound message, outbound delivery fails (`63016`). User must send a text (e.g. "hi") to reopen the window. |

@@ -376,7 +376,7 @@ export function PassportView({ passport, animateScore = false }: PassportViewPro
               Scan to open this Passport
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400 print:text-gray-700 max-w-sm">
-              Scan this QR code with any mobile device camera to open and verify this Loan Passport live on LoenHer.
+              Scan this QR code with any mobile device camera to open and verify this Loan Passport live on LoanHer.
             </p>
           </div>
         </div>

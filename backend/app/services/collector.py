@@ -95,45 +95,36 @@ def _parse_late_count(text: str) -> int | None:
 
 def handle_collector_message(phone: str, text: str) -> list[str]:
     """
-    Handle response from an ajo collector.
+    Handle response from an ajo collector. Supports 1-step verification.
     """
     logger.info("Collector reply received from %s: %r", phone, text)
     if not is_collector_with_pending(phone):
         return [msg.FALLBACK]
 
     pending = store.pending_verifications[phone]
-    step = pending.get("step")
     cleaned_text = text.strip().lower()
 
-    if step == "confirm":
-        if cleaned_text in ("1", "yes", "y"):
-            pending["step"] = "late"
-            return [msg.ASK_LATE_PAYMENTS]
-        elif cleaned_text in ("2", "no", "n"):
-            applicant_phone = pending["applicantPhone"]
-            # Mark applicant's ajo as not-confirmed
-            if applicant_phone in store.conversations:
-                conv_data = store.conversations[applicant_phone].setdefault("data", {})
-                conv_data["ajoStatus"] = "not-confirmed"
-                passport_id = conv_data.get("passportId")
-                if passport_id and passport_id in store.passports:
-                    pass_dict = store.passports[passport_id]
-                    ajo_dict = pass_dict.setdefault("ajo", {})
-                    ajo_dict["verificationStatus"] = "not-confirmed"
-                    passport.compute_passport(passport_id)
-                    applications.refresh_application_for_passport(passport_id)
+    # If collector rejects or says NO / 2 / incorrect / false
+    if cleaned_text in ("2", "no", "n", "incorrect", "false"):
+        applicant_phone = pending["applicantPhone"]
+        if applicant_phone in store.conversations:
+            conv_data = store.conversations[applicant_phone].setdefault("data", {})
+            conv_data["ajoStatus"] = "not-confirmed"
+            passport_id = conv_data.get("passportId")
+            if passport_id and passport_id in store.passports:
+                pass_dict = store.passports[passport_id]
+                ajo_dict = pass_dict.setdefault("ajo", {})
+                ajo_dict["verificationStatus"] = "not-confirmed"
+                passport.compute_passport(passport_id)
+                applications.refresh_application_for_passport(passport_id)
 
-            send_whatsapp(to=applicant_phone, body=msg.applicant_ajo_not_confirmed())
-            pending["step"] = "done"
-            return [msg.COLLECTOR_NOT_CONFIRMED_ACK]
-        else:
-            return [msg.COLLECTOR_INVALID_CONFIRM]
+        send_whatsapp(to=applicant_phone, body=msg.applicant_ajo_not_confirmed())
+        pending["step"] = "done"
+        return [msg.COLLECTOR_NOT_CONFIRMED_ACK]
 
-    elif step == "late":
-        late_val = _parse_late_count(text)
-        if late_val is None:
-            return [msg.COLLECTOR_INVALID_LATE]
-
+    # Parse late payment count directly (e.g. 0, 1, 3, "0", "none")
+    late_val = _parse_late_count(text)
+    if late_val is not None:
         freq_raw = str(pending.get("frequency", "weekly")).lower()
         if "week" in freq_raw:
             periods = 52
@@ -170,4 +161,4 @@ def handle_collector_message(phone: str, text: str) -> list[str]:
         pending["step"] = "done"
         return [msg.COLLECTOR_THANKS]
 
-    return [msg.FALLBACK]
+    return [msg.COLLECTOR_INVALID_LATE]

@@ -1,5 +1,5 @@
 """
-In-memory state store for the LoenHer prototype.
+In-memory state store for the LoanHer prototype.
 
 Because this is a hackathon prototype running with a single worker, all state
 lives in plain Python dicts. Nothing persists across server restarts.

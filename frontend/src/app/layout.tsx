@@ -16,7 +16,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LoenHer — Intelligent SME Loan Readiness Powered by Community & AI",
+  title: "LoanHer — Intelligent SME Loan Readiness Powered by Community & AI",
   description:
     "WhatsApp-based loan-readiness tool empowering women-led micro & small businesses in Nigeria. Built for Wema Bank Hackaholics 7.0.",
 };
@@ -35,7 +35,7 @@ export default function RootLayout({
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
               <div className="flex items-center gap-1.5 font-black text-xl tracking-tight text-white">
-                <span>LOENHER</span>
+                <span>LOANHER</span>
                 <span className="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_10px_#f97316] group-hover:scale-125 transition-transform" />
               </div>
               <span className="hidden sm:inline-block text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">
@@ -79,7 +79,7 @@ export default function RootLayout({
         <footer className="border-t border-white/10 bg-[#060608] py-8 text-center text-xs text-zinc-500 print:hidden space-y-2">
           <div className="max-w-7xl mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-2 font-bold text-zinc-300">
-              <span>LOENHER</span>
+              <span>LOANHER</span>
               <span className="text-orange-500">•</span>
               <span className="text-zinc-500 font-normal">Wema Bank Hackaholics 7.0 Prototype</span>
             </div>

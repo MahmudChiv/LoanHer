@@ -95,13 +95,26 @@ def handle_message(phone: str, text: str, has_media: bool) -> list[str]:
                 "businessName": business_name,
             }
             conv["state"] = ConversationState.ASK_AJO_AMOUNT
-            return [msg.cac_verified(first_name, business_name), msg.ASK_AJO_AMOUNT]
+            return [msg.cac_verified(first_name, business_name), msg.ASK_AJO_ALL]
 
-        # State: ASK_AJO_AMOUNT
+        # State: ASK_AJO_AMOUNT (processes single-turn Ajo details: amount, frequency, months, collector phone)
         elif state == ConversationState.ASK_AJO_AMOUNT:
+            all_details = parsing.parse_all_ajo_details(clean_text)
+            if all_details is not None:
+                amount, frequency, months, norm_phone = all_details
+                conv["data"]["ajoAmount"] = amount
+                conv["data"]["ajoFrequency"] = frequency
+                conv["data"]["ajoMonths"] = months
+                conv["data"]["collectorPhone"] = norm_phone
+                conv["data"]["ajoStatus"] = "self-reported"
+                conv["state"] = ConversationState.WAIT_STATEMENT
+                collector.start_collector_verification(phone)
+                return [msg.COLLECTOR_REQUEST_SENT]
+
+            # Fallback: single amount input
             amount = parsing.parse_amount(clean_text)
             if amount is None:
-                return [msg.HINT_AMOUNT]
+                return [msg.HINT_AJO_ALL]
 
             conv["data"]["ajoAmount"] = amount
             conv["state"] = ConversationState.ASK_AJO_FREQUENCY

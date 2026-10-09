@@ -132,3 +132,37 @@ def normalize_phone(text: str) -> str | None:
         return f"whatsapp:{digits_only}"
 
     return None
+
+
+def parse_all_ajo_details(text: str) -> tuple[int, str, int, str] | None:
+    """
+    Parse amount, frequency, months, and collector phone from a single input string.
+
+    Example inputs:
+      - "5000, weekly, 22, 08053112170"
+      - "50k monthly 12 08031234567"
+
+    Returns (amount, frequency, months, normalized_phone) or None if incomplete.
+    """
+    clean = text.strip()
+    if not clean:
+        return None
+
+    amount = parse_amount(clean)
+    frequency = parse_frequency(clean)
+    months = parse_months(clean)
+
+    # Find phone token matching Nigerian phone pattern (080... or +234...)
+    phone = None
+    tokens = re.findall(r"(?:whatsapp:)?(?:\+?234|0)\d{9,10}\b", clean, re.IGNORECASE)
+    for token in tokens:
+        norm = normalize_phone(token)
+        if norm:
+            phone = norm
+            break
+
+    if amount is not None and frequency is not None and months is not None and phone is not None:
+        return (amount, frequency, months, phone)
+
+    return None
+

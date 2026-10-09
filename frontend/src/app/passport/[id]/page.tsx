@@ -94,7 +94,7 @@ export default function PassportPage({ params }: PassportPageProps) {
             Wema Loan Passport
           </h2>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            Verified financial readiness report prepared via LoenHer.
+            Verified financial readiness report prepared via LoanHer.
           </p>
         </div>
         <button

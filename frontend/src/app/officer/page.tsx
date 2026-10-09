@@ -114,7 +114,7 @@ export default function OfficerDashboard() {
             Wema SME Loan Desk
           </h1>
           <p className="text-sm font-medium text-emerald-600 dark:text-emerald-400 mt-1">
-            Applications prepared with LoenHer
+            Applications prepared with LoanHer
           </p>
         </div>
         <div className="flex items-center gap-3">

@@ -1,4 +1,4 @@
-# LoenHer Backend — Runtime Dependencies
+# LoanHer Backend — Runtime Dependencies
 # Generated after: pip install <packages> in .loanHerVenv
 # Pin top-level packages only; let pip resolve transitive deps.
 

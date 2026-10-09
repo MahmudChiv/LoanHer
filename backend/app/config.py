@@ -19,7 +19,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    """All configuration knobs for the LoenHer backend."""
+    """All configuration knobs for the LoanHer backend."""
 
     # ------------------------------------------------------------------
     # Twilio credentials

@@ -14,7 +14,7 @@ export default function Home() {
           <span className="px-2 py-0.5 rounded-full bg-orange-500 text-white font-extrabold text-[10px] uppercase">
             Whats New
           </span>
-          <span>LoenHer Engine v1.0</span>
+          <span>LoanHer Engine v1.0</span>
           <span className="text-orange-400 font-mono">›</span>
         </div>
 
@@ -62,7 +62,7 @@ export default function Home() {
             {/* Dashboard Floating Preview Bar at Bottom of Ring (matching screenshot) */}
             <div className="w-full max-w-3xl mx-4 mb-4 p-3.5 rounded-2xl glass-card border border-white/15 shadow-2xl flex items-center justify-between gap-4 z-20">
               <div className="flex items-center gap-2 font-black text-xs text-white px-2">
-                <span>LOENHER</span>
+                <span>LOANHER</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-orange-500" />
               </div>
               

@@ -1,7 +1,7 @@
 """
 WhatsApp message copy and formatting templates.
 
-Provides standard bot copy and response messages for the LoenHer onboarding,
+Provides standard bot copy and response messages for the LoanHer onboarding,
 ajo verification, and loan passport flow.
 """
 
@@ -38,6 +38,12 @@ CAC_NAME_MISMATCH = (
 )
 
 # Ajo Questions
+ASK_AJO_ALL = (
+    "Please send your Ajo details in one line:\n"
+    "Contribution Amount, Frequency (daily/weekly/monthly), Months Active, Collector Phone Number.\n\n"
+    "Example: 5000, weekly, 22, 08053112170"
+)
+
 ASK_AJO_AMOUNT = (
     "How much do you contribute to your ajo / esusu savings group per turn?\n"
     "Example: 50,000 or ₦50,000"
@@ -60,6 +66,11 @@ ASK_COLLECTOR_PHONE = (
 )
 
 # Input Validation Hints
+HINT_AJO_ALL = (
+    "Please provide all 4 Ajo details in one message:\n"
+    "Amount, Frequency, Months Active, Collector Phone.\n\n"
+    "Example: 5000, weekly, 22, 08053112170"
+)
 HINT_AMOUNT = (
     "Please enter a valid amount in Naira (numbers only).\n"
     "Example: 50000 or ₦50,000"
@@ -104,11 +115,11 @@ RESET_DONE = (
 
 # Collector Verification Messages
 def collector_question(applicant_name: str, amount: int | float, frequency: str, months: int) -> str:
-    """Format verification question sent to an ajo collector."""
+    """Format single 1-step verification question sent to an ajo collector."""
     return (
-        f"{applicant_name} says she pays ₦{int(amount):,} {frequency} into your ajo group "
-        f"and has done for {months} months.\n"
-        "Is that correct? Reply 1 for Yes, 2 for No."
+        f"Hello! {applicant_name} listed you as her Ajo collector for ₦{int(amount):,} {frequency} "
+        f"over {months} months.\n\n"
+        "To confirm, reply with the number of late payments she made in the past year (reply 0 if none, or reply NO if incorrect)."
     )
 
 

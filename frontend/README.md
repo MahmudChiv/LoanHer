@@ -1,4 +1,4 @@
-# LoenHer Frontend — Wema Bank SME Loan Desk
+# LoanHer Frontend — Wema Bank SME Loan Desk
 
 Next.js (App Router, TypeScript, Tailwind CSS) frontend for LoanHer.
 
