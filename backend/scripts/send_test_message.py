@@ -1,13 +1,13 @@
 """
-Twilio WhatsApp Sandbox CLI Test Script for LoenHer.
+Twilio WhatsApp Sandbox CLI Test Script for LoanHer.
 
 Sends a WhatsApp test message through the Twilio sandbox to verify
 credentials, connectivity, and recipient opt-in status.
 
 Usage:
-    python scripts/send_test_message.py +2348031234567 "Hello from LoenHer"
-    python scripts/send_test_message.py 08031234567 "Hello from LoenHer"
-    python scripts/send_test_message.py whatsapp:+2348031234567 "Hello from LoenHer"
+    python scripts/send_test_message.py +2348031234567 "Hello from LoanHer"
+    python scripts/send_test_message.py 08031234567 "Hello from LoanHer"
+    python scripts/send_test_message.py whatsapp:+2348031234567 "Hello from LoanHer"
 
 Loads configuration from backend/.env (using python-dotenv) regardless
 of the working directory from which this script is invoked.
@@ -296,9 +296,9 @@ def main() -> None:
         print("  <recipient>  Phone number (+234..., 0803..., or whatsapp:+234...)")
         print("  <message>    Text body to send (enclosed in quotes)")
         print("\nExamples:")
-        print('  python scripts/send_test_message.py +2348031234567 "Hello from LoenHer"')
-        print('  python scripts/send_test_message.py 08031234567 "Hello from LoenHer"')
-        print('  python scripts/send_test_message.py whatsapp:+2348031234567 "Hello from LoenHer"')
+        print('  python scripts/send_test_message.py +2348031234567 "Hello from LoanHer"')
+        print('  python scripts/send_test_message.py 08031234567 "Hello from LoanHer"')
+        print('  python scripts/send_test_message.py whatsapp:+2348031234567 "Hello from LoanHer"')
         sys.exit(0 if (len(sys.argv) > 1 and sys.argv[1] in ("-h", "--help")) else 1)
 
     recipient_arg = sys.argv[1]

@@ -27,6 +27,11 @@ def test_webhook_returns_200_and_xml_body():
     assert "application/xml" in response.headers.get("content-type", "")
     assert '<?xml version="1.0" encoding="UTF-8"?><Response></Response>' in response.text
 
+    # Also test /api/whatsapp/webhook alias
+    response_api = client.post("/api/whatsapp/webhook", data=form_data)
+    assert response_api.status_code == 200
+    assert "application/xml" in response_api.headers.get("content-type", "")
+
 
 def test_webhook_with_media_returns_200():
     """Test that webhook accepts media fields without error."""

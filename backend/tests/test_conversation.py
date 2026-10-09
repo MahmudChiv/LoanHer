@@ -65,63 +65,34 @@ def test_conversation_happy_path(monkeypatch):
         },
     )
     res = handle_message(phone, "Kemi Adeyemi, BN 1234567", False)
-    assert res == [msg.cac_verified("Kemi", "Kemi Fabrics"), msg.ASK_AJO_AMOUNT]
+    assert res == [msg.cac_verified("Kemi", "Kemi Fabrics"), msg.ASK_AJO_ALL]
     assert store.conversations[phone]["state"] == ConversationState.ASK_AJO_AMOUNT
     assert store.conversations[phone]["data"]["name"] == "Kemi Adeyemi"
     assert store.conversations[phone]["data"]["businessName"] == "Kemi Fabrics"
     assert store.conversations[phone]["data"]["cacNumber"] == "BN 1234567"
 
-    # Step 2: ASK_AJO_AMOUNT -> provide amount -> ASK_AJO_FREQUENCY
-    # First test invalid amount stays in ASK_AJO_AMOUNT
+    # Step 2: ASK_AJO_AMOUNT -> provide invalid input stays in ASK_AJO_AMOUNT
+    monkeypatch.setattr(parsing, "parse_all_ajo_details", lambda t: None)
     monkeypatch.setattr(parsing, "parse_amount", lambda t: None)
     res = handle_message(phone, "lots of money", False)
-    assert res == [msg.HINT_AMOUNT]
+    assert res == [msg.HINT_AJO_ALL]
     assert store.conversations[phone]["state"] == ConversationState.ASK_AJO_AMOUNT
 
-    # Now provide valid amount
-    monkeypatch.setattr(parsing, "parse_amount", lambda t: 50000)
-    res = handle_message(phone, "50000", False)
-    assert res == [msg.ASK_AJO_FREQUENCY]
-    assert store.conversations[phone]["state"] == ConversationState.ASK_AJO_FREQUENCY
-    assert store.conversations[phone]["data"]["ajoAmount"] == 50000
-
-    # Step 3: ASK_AJO_FREQUENCY -> provide frequency -> ASK_AJO_MONTHS
-    monkeypatch.setattr(parsing, "parse_frequency", lambda t: None)
-    res = handle_message(phone, "random", False)
-    assert res == [msg.HINT_FREQUENCY]
-    assert store.conversations[phone]["state"] == ConversationState.ASK_AJO_FREQUENCY
-
-    monkeypatch.setattr(parsing, "parse_frequency", lambda t: "weekly")
-    res = handle_message(phone, "weekly", False)
-    assert res == [msg.ASK_AJO_MONTHS]
-    assert store.conversations[phone]["state"] == ConversationState.ASK_AJO_MONTHS
-    assert store.conversations[phone]["data"]["ajoFrequency"] == "weekly"
-
-    # Step 4: ASK_AJO_MONTHS -> provide months -> ASK_COLLECTOR_PHONE
-    monkeypatch.setattr(parsing, "parse_months", lambda t: None)
-    res = handle_message(phone, "a few", False)
-    assert res == [msg.HINT_MONTHS]
-    assert store.conversations[phone]["state"] == ConversationState.ASK_AJO_MONTHS
-
-    monkeypatch.setattr(parsing, "parse_months", lambda t: 6)
-    res = handle_message(phone, "6 months", False)
-    assert res == [msg.ASK_COLLECTOR_PHONE]
-    assert store.conversations[phone]["state"] == ConversationState.ASK_COLLECTOR_PHONE
-    assert store.conversations[phone]["data"]["ajoMonths"] == 6
-
-    # Step 5: ASK_COLLECTOR_PHONE -> provide phone -> WAIT_STATEMENT
+    # Now provide single-turn all-in-one Ajo details
     collector_called = []
-    monkeypatch.setattr(parsing, "normalize_phone", lambda t: None)
-    res = handle_message(phone, "not-a-number", False)
-    assert res == [msg.HINT_PHONE]
-    assert store.conversations[phone]["state"] == ConversationState.ASK_COLLECTOR_PHONE
-
-    monkeypatch.setattr(parsing, "normalize_phone", lambda t: "whatsapp:+2348099999999")
+    monkeypatch.setattr(
+        parsing,
+        "parse_all_ajo_details",
+        lambda t: (50000, "weekly", 6, "whatsapp:+2348099999999"),
+    )
     monkeypatch.setattr(collector, "start_collector_verification", lambda p: collector_called.append(p))
 
-    res = handle_message(phone, "08099999999", False)
+    res = handle_message(phone, "50000, weekly, 6, 08099999999", False)
     assert res == [msg.COLLECTOR_REQUEST_SENT]
     assert store.conversations[phone]["state"] == ConversationState.WAIT_STATEMENT
+    assert store.conversations[phone]["data"]["ajoAmount"] == 50000
+    assert store.conversations[phone]["data"]["ajoFrequency"] == "weekly"
+    assert store.conversations[phone]["data"]["ajoMonths"] == 6
     assert store.conversations[phone]["data"]["collectorPhone"] == "whatsapp:+2348099999999"
     assert store.conversations[phone]["data"]["ajoStatus"] == "self-reported"
     assert collector_called == [phone]

@@ -1,4 +1,4 @@
-# LoenHer Backend — Dev Dependencies
+# LoanHer Backend — Dev Dependencies
 # Includes everything in requirements.txt plus dev/test tools.
 
 -r requirements.txt

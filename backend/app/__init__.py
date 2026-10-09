@@ -1,1 +1,1 @@
-"""LoenHer backend application package."""
+"""LoanHer backend application package."""

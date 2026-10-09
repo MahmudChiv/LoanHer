@@ -1,4 +1,4 @@
-# Dummy data directory for LoenHer prototype
+# Dummy data directory for LoanHer prototype
 
 This folder holds all the **fictional** fixture files used by the backend.
 **Do not put any real personal or banking data here.**

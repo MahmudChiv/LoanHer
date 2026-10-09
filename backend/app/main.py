@@ -1,5 +1,5 @@
 """
-LoenHer FastAPI application entry point.
+LoanHer FastAPI application entry point.
 
 Sets up CORS, lifespan startup tasks (seed data loading), and includes all route modules.
 Run with:
@@ -32,7 +32,7 @@ async def lifespan(app: FastAPI):
 settings = get_settings()
 
 app = FastAPI(
-    title="LoenHer API",
+    title="LoanHer API",
     description="WhatsApp loan-readiness tool for women-led SMEs in Nigeria.",
     version="0.1.0",
     lifespan=lifespan,
@@ -63,3 +63,5 @@ app.include_router(webhook.router)       # POST /webhook
 app.include_router(passports.router)     # GET  /api/passports/{passport_id}
 app.include_router(applications.router)  # /api/applications...
 app.include_router(demo.router)          # POST /api/demo/reset
+
+
